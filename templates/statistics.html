@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>الإحصائيات والأرقام - لوحة موسم الحج 1446هـ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(to bottom, #f3faf4 0%, #e9f6ec 100%);
+      color: #2f4e3e;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+    header {
+      background: linear-gradient(to right, #007d5c, #00624b);
+      padding: 1rem 2rem 0.5rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: white;
+    }
+    .update-box {
+      background-color: #ffffff;
+      color: #1d483a;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin: 0.5rem auto 1rem;
+      max-width: fit-content;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    main {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    p.description {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      color: #215746;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .stat-box {
+      perspective: 1000px;
+      height: 140px;
+      cursor: pointer;
+    }
+    .stat-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    .stat-box.flipped .stat-inner {
+      transform: rotateY(180deg);
+    }
+    .stat-front, .stat-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      background-color: #009f72;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      backface-visibility: hidden;
+      padding: 1rem;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    .stat-back {
+      transform: rotateY(180deg);
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #00624b;
+      margin-bottom: 2rem;
+      background-color: #d4f4e5;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+    .probability-card {
+      background-color: white;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .probability-card h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+    .probability-card p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+    .probability-card table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #ffffff;
+    }
+    .probability-card th,
+    .probability-card td {
+      padding: 0.75rem;
+      border: 1px solid #aad4c7;
+      text-align: center;
+    }
+    .probability-card thead {
+      background-color: #b9ede0;
+      font-weight: bold;
+    }
+    .probability-card tfoot {
+      background-color: #e2f8f1;
+      font-weight: bold;
+    }
+    .bottom-nav {
+      background-color: #dff8ee;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .bottom-nav p {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00624b;
+      margin-bottom: 1rem;
+    }
+    .bottom-nav a {
+      display: inline-block;
+      background-color: #009f72;
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .bottom-nav a:hover {
+      background-color: #007658;
+    }
+  </style>
+</head>
+<body>
+
+<body>
+  <header>
+    <h1> قدوم الحجاج - الإحصائيات والأرقام</h1>
+    <div class="update-box">آخر تحديث للبيانات: الأحد 1446/12/5 هـ - 2025/6/1 م</div>
+  </header>
+
+  <main>
+    <p class="description">
+      تعرض هذه الصفحة أبرز الإحصائيات الرقمية المستخلصة من بيانات قدوم الحجاج الخارج لموسم 1446هـ وتشمل الدول والمدن الأعلى استقبالًا، أنواع وسائل القدوم، وأوقات الذروة:
+    </p>
+
+    <!-- قسم الإحصائيات -->
+    <div class="stats">
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">إجمالي عدد الحجاج</div>
+          <div class="stat-back">1,462,893+</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">من جمهورية إندونيسيا<br>(أعلى دولة مشاركة)</div>
+          <div class="stat-back">281,186</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">وصلوا جوًا</div>
+          <div class="stat-back">1,398,235</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">استقبلتهم المدينة</div>
+          <div class="stat-back">572,543</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">ذروة الوصول</div>
+          <div class="stat-back">27–28 مايو 2025</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">عدد الدول المشاركة</div>
+          <div class="stat-back">86</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">أكثر يوم ازدحامًا<br>(69,044 حاجًا)</div>
+          <div class="stat-back">28 مايو 2025</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">أنواع وسائل القدوم<br>(جواً، براً، بحراً)</div>
+          <div class="stat-back">3</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">عدد مدن الوصول</div>
+          <div class="stat-back">6</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">قادمون بحراً</div>
+          <div class="stat-back">5,089</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">جمهورية سيراليون<br>(أقل دولة مشاركة)</div>
+          <div class="stat-back">2</div>
+        </div>
+      </div>
+      <div class="stat-box" onclick="this.classList.toggle('flipped')">
+        <div class="stat-inner">
+          <div class="stat-front">قادمون براً</div>
+          <div class="stat-back">59,569</div>
+        </div>
+      </div>
+    </div>
+<!-- قسم قدوم الحجاج حسب المنافذ -->
+<div class="section-title">قدوم الحجاج حسب المنافذ</div>
+
+<section class="probability-card" style="background-color: #ffffff; margin-bottom: 2rem; border-radius: 12px;">
+  <h3 style="color: #00624b; border-bottom: 2px solid #b9ede0; padding-bottom: 0.5rem;">أولًا: المنافذ الجوية</h3>
+  <ul style="padding-right: 1.5rem; line-height: 2; color: #2f4e3e;">
+    <li>مطار الأمير محمد - المدينة: <strong>572,543</strong></li>
+    <li>مطار الملك عبد العزيز - جدة: <strong>503,167</strong></li>
+    <li>مطار الملك خالد - الرياض: <strong>7,596</strong></li>
+    <li>مطار الطائف - الطائف: <strong>1,126</strong></li>
+    <li>مطار الأمير عبد المحسن - ينبع: <strong>284</strong></li>
+    <li>مطار الملك فهد - الشرقية: <strong>229</strong></li>
+  </ul>
+</section>
+
+<section class="probability-card" style="background-color: #ffffff; margin-bottom: 2rem; border-radius: 12px;">
+  <h3 style="color: #00624b; border-bottom: 2px solid #b9ede0; padding-bottom: 0.5rem;">ثانيًا: المنافذ المتقدمة</h3>
+  <ul style="padding-right: 1.5rem; line-height: 2; color: #2f4e3e;">
+    <li>مطار دكا: <strong>78,442</strong></li>
+    <li>مطار جاكرتا: <strong>51,443</strong></li>
+    <li>مطار سورابايا (إندونيسيا): <strong>37,050</strong></li>
+    <li>مطار سولو (إندونيسيا): <strong>34,048</strong></li>
+    <li>مطار كوالالمبور: <strong>31,069</strong></li>
+    <li>مطار إسلام آباد: <strong>27,296</strong></li>
+    <li>مطار كراتشي (باكستان): <strong>18,678</strong></li>
+    <li>مطار تركيا: <strong>14,522</strong></li>
+    <li>مطار أنقرة (تركيا): <strong>7,834</strong></li>
+    <li>مطار محمد الخامس: <strong>6,990</strong></li>
+    <li>مطار ساحل العاج: <strong>6,393</strong></li>
+  </ul>
+</section>
+
+<section class="probability-card" style="background-color: #ffffff; margin-bottom: 2rem; border-radius: 12px;">
+  <h3 style="color: #00624b; border-bottom: 2px solid #b9ede0; padding-bottom: 0.5rem;">ثالثًا: المنافذ البرية</h3>
+  <ul style="padding-right: 1.5rem; line-height: 2; color: #2f4e3e;">
+    <li>منفذ جديدة عرعر: <strong>24,627</strong></li>
+    <li>منفذ حالة عمار: <strong>18,678</strong></li>
+    <li>منفذ الوديعة: <strong>12,976</strong></li>
+    <li>منفذ البطحاء: <strong>3,061</strong></li>
+    <li>منفذ سلوى: <strong>86</strong></li>
+    <li>منفذ الحديثة: <strong>69</strong></li>
+    <li>منفذ الدرة: <strong>15</strong></li>
+    <li>منفذ الخفجي: <strong>10</strong></li>
+    <li>منفذ الرقعي: <strong>10</strong></li>
+    <li>منفذ الربع الخالي: <strong>5</strong></li>
+    <li>جسر الملك فهد: <strong>32</strong></li>
+  </ul>
+</section>
+
+<section class="probability-card" style="background-color: #ffffff; margin-bottom: 3rem; border-radius: 12px;">
+  <h3 style="color: #00624b; border-bottom: 2px solid #b9ede0; padding-bottom: 0.5rem;">رابعًا: المنافذ البحرية</h3>
+  <ul style="padding-right: 1.5rem; line-height: 2; color: #2f4e3e;">
+    <li>ميناء جدة الإسلامي: <strong>5,089</strong></li>
+  </ul>
+</section>
+
+      <!-- بداية قسم الاحتمالات -->
+<!-- عنوان القسم -->
+<div class="section-title">احتمالات قدوم الحجاج</div>
+
+<!-- الاحتمال A -->
+<<section class="probability-card" style="background-color: #e6f4f1; margin-bottom: 2rem; border-radius: 12px;">
+  <div class="card-header" onclick="toggleTable('table-a', this)" style="cursor: pointer; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h3 style="color: #0e615a; margin: 0;">الاحتمال A</h3>
+      <p><strong>مدينة الوصول:</strong> المدينة المنورة</p>
+      <p><strong>الإقامة قبل الحج:</strong> المدينة - مكة</p>
+    </div>
+    <span class="toggle-icon" style="font-size: 1.5rem; color: #0e615a;">▼</span>
+  </div>
+  <div id="table-a" class="card-table" style="display: none; padding: 0 1rem 1rem;">
+    <table style="width:100%; border-collapse: collapse; background-color: white;">
+      <thead style="background-color: #d3ede9;">
+        <tr><th>نوع المنفذ</th><th>نوع القدوم</th><th>عدد الحجاج</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>جو</td><td>مبكر</td><td>157,302</td></tr>
+        <tr><td>بر</td><td>مبكر</td><td>5,921</td></tr>
+        <tr><td>بحر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>جو</td><td>متأخر</td><td>257,824</td></tr>
+        <tr><td>بر</td><td>متأخر</td><td>7,894</td></tr>
+        <tr><td>بحر</td><td>متأخر</td><td>9</td></tr>
+      </tbody>
+      <tfoot style="background-color: #f3f7f6;">
+        <tr><td colspan="2">الإجمالي</td><td>428,950</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+
+<!-- الاحتمال D -->
+<section class="probability-card" style="background-color: #f8f3ed; margin-bottom: 2rem; border-radius: 12px;">
+  <div class="card-header" onclick="toggleTable('table-d', this)" style="cursor: pointer; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h3 style="color: #7a5a23; margin: 0;">الاحتمال D</h3>
+      <p><strong>مدينة الوصول:</strong> جدة</p>
+      <p><strong>الإقامة قبل الحج:</strong> مكة</p>
+    </div>
+    <span class="toggle-icon" style="font-size: 1.5rem; color: #7a5a23;">▼</span>
+  </div>
+  <div id="table-d" class="card-table" style="display: none; padding: 0 1rem 1rem;">
+    <table style="width:100%; border-collapse: collapse; background-color: white;">
+      <thead style="background-color: #f0e9df;">
+        <tr><th>نوع المنفذ</th><th>نوع القدوم</th><th>عدد الحجاج</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>جو</td><td>مبكر</td><td>199,097</td></tr>
+        <tr><td>بر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>بحر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>جو</td><td>متأخر</td><td>402,495</td></tr>
+        <tr><td>بر</td><td>متأخر</td><td>10,757</td></tr>
+        <tr><td>بحر</td><td>متأخر</td><td>14</td></tr>
+      </tbody>
+      <tfoot style="background-color: #f5eee6;">
+        <tr><td colspan="2">الإجمالي</td><td>612,363</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- الاحتمال E -->
+<section class="probability-card" style="background-color: #f1f7fa; margin-bottom: 2rem; border-radius: 12px;">
+  <div class="card-header" onclick="toggleTable('table-e', this)" style="cursor: pointer; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h3 style="color: #195065; margin: 0;">الاحتمال E</h3>
+      <p><strong>مدينة الوصول:</strong> مكة</p>
+      <p><strong>الإقامة قبل الحج:</strong> مكة</p>
+    </div>
+    <span class="toggle-icon" style="font-size: 1.5rem; color: #195065;">▼</span>
+  </div>
+  <div id="table-e" class="card-table" style="display: none; padding: 0 1rem 1rem;">
+    <table style="width:100%; border-collapse: collapse; background-color: white;">
+      <thead style="background-color: #deedf2;">
+        <tr><th>نوع المنفذ</th><th>نوع القدوم</th><th>عدد الحجاج</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>جو</td><td>مبكر</td><td>230</td></tr>
+        <tr><td>بر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>بحر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>جو</td><td>متأخر</td><td>1,821</td></tr>
+        <tr><td>بر</td><td>متأخر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>بحر</td><td>متأخر</td><td>لا يوجد قادمين</td></tr>
+      </tbody>
+      <tfoot style="background-color: #edf6fa;">
+        <tr><td colspan="2">الإجمالي</td><td>2,051</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+
+<!-- الاحتمال F -->
+<section class="probability-card" style="background-color: #fcf3f0; margin-bottom: 2rem; border-radius: 12px;">
+  <div class="card-header" onclick="toggleTable('table-f', this)" style="cursor: pointer; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h3 style="color: #963b34; margin: 0;">الاحتمال F</h3>
+      <p><strong>مدن الوصول:</strong> الرياض - الطائف - ينبع</p>
+      <p><strong>الإقامة قبل الحج:</strong> مكة</p>
+    </div>
+    <span class="toggle-icon" style="font-size: 1.5rem; color: #963b34;">▼</span>
+  </div>
+  <div id="table-f" class="card-table" style="display: none; padding: 0 1rem 1rem;">
+    <table style="width:100%; border-collapse: collapse; background-color: white;">
+      <thead style="background-color: #f9e1db;">
+        <tr><th>نوع المنفذ</th><th>نوع القدوم</th><th>عدد الحجاج</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>جو</td><td>مبكر</td><td>177</td></tr>
+        <tr><td>بر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>بحر</td><td>مبكر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>جو</td><td>متأخر</td><td>1,321</td></tr>
+        <tr><td>بر</td><td>متأخر</td><td>لا يوجد قادمين</td></tr>
+        <tr><td>بحر</td><td>متأخر</td><td>لا يوجد قادمين</td></tr>
+      </tbody>
+      <tfoot style="background-color: #f7e8e4;">
+        <tr><td colspan="2">الإجمالي</td><td>1,498</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+
+<script>
+  function toggleTable(id, header) {
+    const table = document.getElementById(id);
+    const icon = header.querySelector('.toggle-icon');
+    const visible = table.style.display === 'block';
+    table.style.display = visible ? 'none' : 'block';
+    icon.textContent = visible ? '▼' : '▲';
+  }
+</script>
+
+<!-- ملاحظة توضيحية بخصوص الاحتمالات B و C -->
+<div style="
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-top: 3rem;
+  font-size: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+">
+  <strong>ملاحظة:</strong> لم يتم حصر بيانات الاحتمالين <strong>B</strong> و<strong>C</strong> ضمن برامج احتمالات قدوم الحجاج، نظرًا لعدم تواجد بيانات المسارات المخصصة لهما في مجموعة البيانات الحالية.
+</div>
+
+<!-- زر الانتقال -->
+<div style="background-color: #fff8ec; padding: 1.5rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center;">
+  <p style="font-size: 1.1rem; font-weight: bold; color: #7A5A23; margin-bottom: 1rem;">
+    هل ترغب في استكشاف مزيد من التحليلات حول مواقف الحجاج؟
+  </p>
+  <a href="/parking" style="
+    display: inline-block;
+    background-color: #E4A940;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  ">🔍 الانتقال إلى تحليل مواقف الحجاج</a>
+</div>

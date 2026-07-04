@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>توزيع الحجاج حسب الدولة ونوع المنفذ ومدينة الوصول</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #fdfcfb;
+      direction: rtl;
+      text-align: center;
+    }
+    svg {
+      width: 100%;
+      height: 900px;
+    }
+    .tooltip {
+      position: absolute;
+      text-align: center;
+      padding: 6px;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+    }
+    h1 {
+      color: #7A5A23;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>توزيع الحجاج حسب الدولة ونوع المنفذ ومدينة الوصول - موسم 1446هـ</h1>
+  <svg></svg>
+  <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    const svg = d3.select("svg"),
+          width = 950,
+          height = 900,
+          innerRadius = 120,
+          outerRadius = Math.min(width, height) / 2 - 100;
+
+    const tooltip = d3.select("#tooltip");
+
+    const g = svg
+      .attr("viewBox", [-width / 2, -height / 2, width, height])
+      .append("g");
+
+    d3.json("/static/radial_stacked_by_city_and_type.json").then(data => {
+      const keys = Object.keys(data[0]).filter(k => k !== "Countries");
+
+      // توليد ألوان مخصصة حسب نوع المنفذ
+      const baseColors = {
+        "جو": "#2ca02c",     // أخضر
+        "بر": "#ff7f0e",     // برتقالي
+        "بحر": "#1f77b4"     // أزرق
+      };
+
+      const color = d3.scaleOrdinal()
+        .domain(keys)
+        .range(keys.map(k => {
+          if (k.includes("جو")) return baseColors["جو"];
+          if (k.includes("بر")) return baseColors["بر"];
+          if (k.includes("بحر")) return baseColors["بحر"];
+          return "#ccc";
+        }));
+
+      data.sort((a, b) => d3.sum(keys, k => b[k]) - d3.sum(keys, k => a[k]));
+
+      const x = d3.scaleBand()
+        .domain(data.map(d => d.Countries))
+        .range([0, 2 * Math.PI])
+        .align(0);
+
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d3.sum(keys, k => d[k]))])
+        .range([innerRadius, outerRadius]);
+
+      const stack = d3.stack().keys(keys);
+      const series = stack(data);
+
+      g.append("g")
+        .selectAll("g")
+        .data(series)
+        .join("g")
+        .attr("fill", d => color(d.key))
+        .selectAll("path")
+        .data(d => d)
+        .join("path")
+        .attr("d", d3.arc()
+          .innerRadius(d => y(d[0]))
+          .outerRadius(d => y(d[1]))
+          .startAngle(d => x(d.data.Countries))
+          .endAngle(d => x(d.data.Countries) + x.bandwidth())
+          .padAngle(0.01)
+          .padRadius(innerRadius))
+        .on("mouseover", (event, d) => {
+          const country = d.data.Countries;
+          const key = d3.select(event.target.parentNode).datum().key;
+          const value = d.data[key];
+          tooltip
+            .style("opacity", 1)
+            .html(`<strong>${country}</strong><br>${key} : ${value.toLocaleString()} حاج`)
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 30) + "px");
+        })
+        .on("mousemove", event => {
+          tooltip
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 30) + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.style("opacity", 0);
+        });
+
+      g.append("g")
+        .attr("text-anchor", "middle")
+        .selectAll("g")
+        .data(data)
+        .join("g")
+        .attr("transform", d => `
+          rotate(${((x(d.Countries) + x.bandwidth() / 2) * 180 / Math.PI - 90)})
+          translate(${outerRadius + 20},0)
+        `)
+        .append("text")
+        .attr("transform", d =>
+          (x(d.Countries) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI
+          ? "rotate(90)translate(0,0)"
+          : "rotate(-90)translate(0,0)"
+        )
+        .text(d => d.Countries.length > 18 ? d.Countries.slice(0, 18) + "..." : d.Countries)
+        .style("font-size", "12px");
+
+      // مفتاح الألوان الأساسي للأنواع
+      const legend = svg.append("g")
+        .attr("transform", `translate(${width / 2 - 140},${-height / 2 + 20})`);
+
+      const types = ["جو", "بر", "بحر"];
+      types.forEach((t, i) => {
+        const row = legend.append("g").attr("transform", `translate(0,${i * 25})`);
+        row.append("rect").attr("width", 18).attr("height", 18).attr("fill", baseColors[t]);
+        row.append("text")
+          .attr("x", -10)
+          .attr("y", 13)
+          .attr("text-anchor", "end")
+          .text(t === "جو" ? "جوي ✈" : t === "بر" ? "بري 🚗" : "بحري 🚢");
+      });
+    });
+  </script>
+</body>
+</html>

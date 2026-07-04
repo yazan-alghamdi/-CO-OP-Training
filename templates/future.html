@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>التحديات و الأعمال المستقبلية – موسم حج 1446هـ</title>
+
+  <!-- استدعاء خط Tajawal من Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #fdfaf4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #E4A940;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.3rem;
+      color: #2E2E2E;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+
+    section {
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-right: 6px solid #B87700;
+    }
+
+    section h2 {
+      color: #B87700;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    section h2::before {
+      content: "🔸";
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+
+    section ul {
+      line-height: 2.1;
+      font-size: 1.1rem;
+      padding-right: 1.5rem;
+    }
+
+    section ul li {
+      margin-bottom: 0.8rem;
+      font-weight: normal;
+    }
+
+    section ul li::marker {
+      color: #7A5A23;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.7rem;
+      }
+      section h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>التحديات و الأعمال المستقبلية – موسم حج 1446هـ</h1>
+  </header>
+
+  <div class="container">
+
+    <section>
+      <h2>🧩 التحديات التي واجهها المشروع</h2>
+      <ul>
+        <li>نقص بعض البيانات التشغيلية الدقيقة: مثل بيانات الإقامة التفصيلية بعد الحج.</li>
+        <li>تفاوت تنسيقات البيانات: مما تطلّب وقتًا وجهدًا في عمليات التنظيف والتوحيد.</li>
+        <li>محدودية الوصول إلى بعض المسارات الخاصة لبعض الدول أو الشركات ضمن مجموعة البيانات.</li>
+        <li>عدم توفر جميع الاحتمالات التنظيمية ضمن البيانات: حيث أن بعض الاحتمالات المعتمدة في خطة الوزارة لم تكن ممثلة فعليًا داخل البيانات المتاحة، مما أعاق شمولية التحليل الكامل.</li>
+        <li>جودة البيانات: تم رصد تواريخ غير صحيحة أو غير منطقية في بيانات القدوم والمغادرة من منصة نسك، بالإضافة إلى بعض المعلومات غير الدقيقة، مما استدعى تنفيذ معالجة مكثفة وتصحيح دقيق للبيانات قبل استخدامها في التحليل.</li>
+        <li>نقص وتفاوت في المعلومات بين بيانات القدوم والمغادرة: حيث تمت ملاحظة عدم توفر بعض الأعمدة المهمة (features) في ملفات المغادرة مثل تفاصيل نوع المسار، المدينة النهائية، أو هوية الشركة، مما حد من إجراء بعض التحليلات المتقدمة بشكل موحد بين المرحلتين.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🚀 الأعمال المستقبلية</h2>
+      <ul>
+        <li>تحسين جودة البيانات والمصادر من خلال توحيد الهيكلية، وتدقيق التواريخ، والتأكد من اكتمال جميع الحقول المطلوبة، بما يضمن جاهزية البيانات الفورية للتحليل دون الحاجة إلى معالجة مكثفة.</li>
+        <li>تصميم واجهات API رسمية لجلب بيانات القدوم والمغادرة بشكل مباشر من المصدر، وتحديث التحليلات بشكل لحظي دون الحاجة لمعالجة يدوية متكررة.</li>
+        <li>إنشاء لوحة تحكم موحدة تفاعلية (Dashboard) تشمل تحليل لحظي لكل من بيانات القدوم، الإقامة، التنقل، والمغادرة، مع فلاتر ذكية وتصنيفات ديناميكية.</li>
+        <li>بناء نماذج تنبؤية ذكية لتقدير عدد الحجاج المتوقعين يوميًا حسب الدولة ومدن الوصول، وتوقع حالات الازدحام في المنافذ أو المسارات الحساسة.</li>
+        <li>تطوير تطبيق جوال للجهات التنظيمية يتيح لهم الاطلاع على المؤشرات والإحصاءات في أي وقت وبواجهة مبسطة مع تنبيهات آلية.</li>
+        <li>تطبيق الذكاء الاصطناعي لتحليل الأنماط غير المتوقعة أو الحالات الاستثنائية (مثل المغادرة المبكرة المفاجئة أو التجمعات غير المخطط لها).</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- زر العودة إلى الصفحة الرئيسية -->
+  <div style="text-align: center; margin-bottom: 3rem;">
+    <a href="/" style="
+      background-color: #7A5A23;
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      font-family: 'Tajawal', sans-serif;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    ">
+      🏠 العودة إلى الصفحة الرئيسية
+    </a>
+  </div>
+
+</body>
+</html>

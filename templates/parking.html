@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>الرسوم البيانية لحركة الحجاج – موسم حج 1446هـ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f3f0eb;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #7A5A23;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+    section {
+      padding: 2rem;
+      background-color: #ffffff;
+      margin: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #7A5A23;
+      margin-bottom: 1rem;
+    }
+    iframe {
+      width: 100%;
+      height: 550px;
+      border: none;
+      margin-bottom: 2rem;
+    }
+    .accordion-toggle {
+      cursor: pointer;
+      font-weight: bold;
+      color: #7A5A23;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      border-bottom: 2px solid #E4A940;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    .accordion-toggle span {
+      font-size: 1.4rem;
+      transition: transform 0.3s ease;
+    }
+    .accordion-toggle.open span {
+      transform: rotate(180deg);
+    }
+    .accordion-content {
+      display: none;
+      padding-top: 1rem;
+    }
+    .stats-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat {
+      background-color: #f9f6f0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      flex: 1 1 220px;
+      text-align: center;
+    }
+    .stat h3 {
+      margin: 0.5rem 0;
+      color: #7A5A23;
+      font-size: 1.5rem;
+    }
+    .chart-box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      background-color: #fafafa;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📊 لوحة تحليل الرسوم البيانية – موسم حج 1446هـ</h1>
+  <p>مقارنة يوم 7 ويوم 8 لموقف كدي والأمير متعب، وإجمالي الوصول إلى منى</p>
+</header>
+
+<section>
+  <h2>🚏 موقف كدي</h2>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    🔢 إحصائيات موقف كدي <span>▼</span>
+  </div>
+  <div class="accordion-content">
+    <div class="stats-box">
+      <div class="stat"><h3>47,605</h3><p>إجمالي الحجاج الداخلين</p></div>
+      <div class="stat"><h3>40,467</h3><p>إجمالي الحجاج المغادرين</p></div>
+      <div class="stat"><h3>1,045</h3><p>إجمالي الباصات الداخلة</p></div>
+      <div class="stat"><h3>861</h3><p>إجمالي الباصات المغادرة</p></div>
+      <div class="stat"><h3>4,328</h3><p>متوسط الحجاج لكل فترة</p></div>
+      <div class="stat"><h3>79</h3><p>متوسط الباصات المغادرة</p></div>
+      <div class="stat"><h3>16:00 - 18:00</h3><p>أكثر فترة ازدحام (دخول)</p></div>
+      <div class="stat"><h3>02:00 - 04:00</h3><p>أقل فترة ازدحام (دخول)</p></div>
+      <div class="stat"><h3>11</h3><p>عدد الفترات الزمنية</p></div>
+    </div>
+  </div>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">📈 الرسوم البيانية <span>▼</span></div>
+  <div class="accordion-content">
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/kudai_buses_day7.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/kudai_buses_day8.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/kudai_pilgrims_day7.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/kudai_pilgrims_day8.html') }}"></iframe></div>
+  </div>
+</section>
+
+<section>
+  <h2>🚏 موقف الأمير متعب</h2>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    🔢 إحصائيات موقف الأمير متعب <span>▼</span>
+  </div>
+  <div class="accordion-content">
+    <div class="stats-box">
+      <div class="stat"><h3>39,620</h3><p>إجمالي الحجاج الداخلين</p></div>
+      <div class="stat"><h3>29,563</h3><p>إجمالي الحجاج المغادرين</p></div>
+      <div class="stat"><h3>843</h3><p>إجمالي الباصات الداخلة</p></div>
+      <div class="stat"><h3>614</h3><p>إجمالي الباصات المغادرة</p></div>
+      <div class="stat"><h3>3,602</h3><p>متوسط الحجاج لكل فترة</p></div>
+      <div class="stat"><h3>56</h3><p>متوسط الباصات المغادرة</p></div>
+      <div class="stat"><h3>16:00 - 18:00</h3><p>أكثر فترة ازدحام (دخول)</p></div>
+      <div class="stat"><h3>02:00 - 04:00</h3><p>أقل فترة ازدحام (دخول)</p></div>
+      <div class="stat"><h3>11</h3><p>عدد الفترات الزمنية</p></div>
+    </div>
+  </div>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">📈 الرسوم البيانية <span>▼</span></div>
+  <div class="accordion-content">
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/muteb_buses_day7.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/muteb_buses_day8.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/muteb_pilgrims_day7.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/muteb_pilgrims_day8.html') }}"></iframe></div>
+  </div>
+</section>
+
+<section>
+  <h2>⛰️ الواصلين إلى منى</h2>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    🔢 إحصائيات الواصلين إلى منى <span>▼</span>
+  </div>
+  <div class="accordion-content">
+    <div class="stats-box">
+      <div class="stat"><h3>68,984</h3><p>إجمالي الحجاج الواصلين</p></div>
+      <div class="stat"><h3>1,467</h3><p>إجمالي الباصات الواصلين</p></div>
+    </div>
+  </div>
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">📈 الرسوم البيانية <span>▼</span></div>
+  <div class="accordion-content">
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/mina_buses.html') }}"></iframe></div>
+    <div class="chart-box"><iframe src="{{ url_for('static', filename='plots/mina_pilgrims.html') }}"></iframe></div>
+  </div>
+</section>
+
+<script>
+  function toggleAccordion(toggle) {
+    const content = toggle.nextElementSibling;
+    const arrow = toggle.querySelector("span");
+    toggle.classList.toggle("open");
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      arrow.textContent = "▼";
+    } else {
+      content.style.display = "block";
+      arrow.textContent = "▲";
+    }
+  }
+</script>
+
+<div style="text-align: center; margin: 3rem 0;">
+  <a href="{{ url_for('departure') }}" style="
+    background-color: #7A5A23;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    transition: background-color 0.3s ease;">
+    🧳 الانتقال إلى صفحة مغادرة حجاج الخارج لعام 1446هـ
+  </a>
+</div>
+
+</body>
+</html>

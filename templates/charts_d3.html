@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>الرسوم التفاعلية D3 - لوحة موسم الحج 1446هـ</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #F8F8F8;
+      direction: rtl;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #7A5A23;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .chart-box {
+      background-color: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    h2 {
+      color: #7A5A23;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+    .buttons {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .buttons a {
+      background-color: #E4A940;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      margin: 0 0.5rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .buttons a:hover {
+      background-color: #c8912a;
+    }
+  </style>
+</head>
+<body>
+
+<header>📊 الرسوم التفاعلية لموسم حج 1446هـ - باستخدام D3.js</header>
+<div class="container">
+
+  <!-- 1. Bar Chart Race -->
+  <div class="chart-box">
+    <h2>الحجاج حسب الدول (Bar Chart Race)</h2>
+    <svg id="barRace" width="1000" height="500"></svg>
+  </div>
+
+  <!-- 2. Donut Chart Placeholder -->
+  <div class="chart-box">
+    <h2>توزيع مدن الوصول (Donut Chart)</h2>
+    <svg id="donutChart" width="700" height="500"></svg>
+  </div>
+
+  <!-- 3. Gradient Encoding Placeholder -->
+  <div class="chart-box">
+    <h2>تمثيل تدرجي للحجاج حسب التاريخ والدولة</h2>
+    <svg id="gradientEncoding" width="1000" height="500"></svg>
+  </div>
+
+  <!-- 4. Pie Chart Update -->
+  <div class="chart-box">
+    <h2>نسب القدوم حسب نوع المنفذ (Pie Chart)</h2>
+    <svg id="pieChart" width="700" height="500"></svg>
+  </div>
+
+  <!-- 5. Sequences Sunburst Placeholder -->
+  <div class="chart-box">
+    <h2>تحليل التسلسل: الدولة ← المدينة ← نوع القدوم</h2>
+    <div id="sunburst"></div>
+  </div>
+
+  <!-- 6. Chord Diagram II Placeholder -->
+  <div class="chart-box">
+    <h2>علاقات المدن والدول (Chord Diagram)</h2>
+    <svg id="chordDiagram" width="800" height="600"></svg>
+  </div>
+
+  <div class="buttons">
+    <a href="/">العودة للصفحة الرئيسية</a>
+    <a href="/charts">رسوم Plotly</a>
+    <a href="/statistics">الإحصائيات</a>
+  </div>
+
+</div>
+
+<script>
+  // === Bar Chart Race رسم ===
+  fetch("/data/bar_race")
+    .then(res => res.json())
+    .then(data => {
+      const svg = d3.select("#barRace"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height"),
+            margin = {top: 50, right: 80, bottom: 50, left: 150};
+
+      const chart = svg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+
+      const nested = d3.groups(data, d => d["Arrival date"])
+        .map(([key, values]) => {
+          return {
+            date: key,
+            values: values.sort((a, b) => d3.descending(a["Num of pilgrims"], b["Num of pilgrims"])).slice(0, 10)
+          };
+        });
+
+      const x = d3.scaleLinear().range([0, w]);
+      const y = d3.scaleBand().range([0, h]).padding(0.15);
+
+      let color = d3.scaleOrdinal(d3.schemeSet3);
+
+      function draw(frameIndex) {
+        if (frameIndex >= nested.length) return;
+        const frame = nested[frameIndex];
+
+        x.domain([0, d3.max(frame.values, d => d["Num of pilgrims"])])
+        y.domain(frame.values.map(d => d["Countries"]));
+
+        chart.selectAll(".bar").remove();
+        chart.selectAll(".label").remove();
+        chart.selectAll(".x-axis").remove();
+
+        chart.append("g")
+          .attr("class", "x-axis")
+          .attr("transform", `translate(0,0)`)
+          .call(d3.axisTop(x).ticks(5).tickFormat(d3.format(",")));
+
+        chart.selectAll(".bar")
+          .data(frame.values, d => d["Countries"])
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("y", d => y(d["Countries"]))
+          .attr("height", y.bandwidth())
+          .attr("x", 0)
+          .attr("width", d => x(d["Num of pilgrims"]))
+          .attr("fill", d => color(d["Countries"]));
+
+        chart.selectAll(".label")
+          .data(frame.values, d => d["Countries"])
+          .enter()
+          .append("text")
+          .attr("class", "label")
+          .attr("y", d => y(d["Countries"]) + y.bandwidth() / 2 + 5)
+          .attr("x", d => x(d["Num of pilgrims"]) + 8)
+          .text(d => `${d["Countries"]}: ${d3.format(",")(d["Num of pilgrims"])}`)
+          .style("font-size", "13px")
+          .style("fill", "#222");
+
+        svg.selectAll(".dateLabel").remove();
+        svg.append("text")
+          .attr("class", "dateLabel")
+          .attr("x", width - 180)
+          .attr("y", height - 20)
+          .style("font-size", "18px")
+          .style("fill", "#7A5A23")
+          .text(`📅 ${frame.date}`);
+
+        setTimeout(() => draw(frameIndex + 1), 1200);
+      }
+
+      draw(0);
+    });
+</script>
+
+</body>
+</html>

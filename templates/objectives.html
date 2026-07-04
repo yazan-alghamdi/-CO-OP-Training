@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>أهداف التحليل - لوحة موسم الحج 1446هـ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f0f9fd url('{{ url_for("static", filename="ornament_tranquility.png") }}') repeat;
+      background-size: 280px;
+      background-position: top center;
+      background-attachment: fixed;
+      color: #005D8A;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      font-size: 1.3rem;
+    }
+
+    header {
+      background: linear-gradient(90deg, #2999CC, #007097);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 900;
+    }
+
+    main {
+      padding: 2.5rem;
+      max-width: 950px;
+      margin: auto;
+    }
+
+    .section-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(0, 112, 151, 0.18);
+      padding: 2.2rem;
+      margin-bottom: 2.5rem;
+      line-height: 2.2;
+      backdrop-filter: blur(2px);
+    }
+
+    .section-box h2 {
+      font-size: 2rem;
+      color: #007097;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    .section-box h2 span {
+      font-size: 2.2rem;
+      margin-left: 0.6rem;
+    }
+
+    .section-box p {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #044c6a;
+    }
+
+    .section-box ul {
+      padding-right: 1.5rem;
+    }
+
+    .section-box li {
+      margin-bottom: 0.7rem;
+      font-size: 1.35rem;
+      font-weight: 500;
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      background-color: #2999CC;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3rem;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .buttons a:hover {
+      background-color: #007097;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>أهداف التحليل</h1>
+  </header>
+
+  <main>
+
+    <div class="section-box">
+      <h2><span>📘</span> مقدمة و نظرة عامة </h2>
+      <p>
+        يهدف هذا المشروع إلى تقديم فهم شامل لأنماط قدوم ومغادرة الحجاج من خارج المملكة خلال موسم الحج 1446هـ، وذلك من خلال تحليل دقيق وشامل للبيانات التنظيمية المتاحة. يسعى المشروع إلى توفير رؤى عملية تستند إلى بيانات فعلية تم جمعها من مصادر رسمية تشمل وزارة الحج والعمرة ومنصة نسك.
+      </p>
+      <p>
+        تم تحليل البيانات بعد تنظيفها وتوحيدها واشتقاق متغيرات جديدة منها، كفترة القدوم، ونوع وسيلة النقل، ومدن الوصول، وذلك بهدف تحسين كفاءة التنظيم والإدارة خلال موسم الحج.
+      </p>
+      <p>
+        اعتمد المشروع على أدوات علم البيانات مثل Python  , Java Script , HTML , Pandas  , Matplotlib و Plotly، إضافة إلى الرسوم البيانية التفاعلية لتيسير فهم الأنماط والنتائج.
+      </p>
+    </div>
+
+    <div class="section-box">
+      <h2><span>🎯</span> الأهداف الرئيسية</h2>
+      <ul>
+        <li>✅ تحليل التوزيع الجغرافي للجنسيات المختلفة وتحديد الدول ذات التأثير الأكبر.</li>
+        <li>📌 رصد الأنماط الزمنية لوصول الحجاج وتصنيفها إلى مراحل (مبكر، متأخر).</li>
+        <li>📊 تقييم توزيع الحجاج على المدن والمنافذ وتحديد المواقع الأكثر استقبالاً.</li>
+        <li>🚍 تحليل وسيلة الوصول (جوية، برية، بحرية) ونسب الاعتماد عليها.</li>
+        <li>🏨 استكشاف أنماط الإقامة قبل الحج، ورصد التجمعات السكنية الشائعة.</li>
+        <li>🧠 تقديم مؤشرات وتحليلات داعمة لاتخاذ قرارات تشغيلية وتنظيمية دقيقة.</li>
+      </ul>
+    </div>
+
+    <div class="section-box">
+      <h2><span>🧭</span> الرؤية المستقبلية</h2>
+      <ul>
+        <li>🔁 دمج بيانات القدوم والمغادرة لرسم مسار الحاج داخل المملكة.</li>
+        <li>📈 تطوير نموذج تنبؤي لتقدير كثافة الوصول حسب الدولة والتاريخ.</li>
+        <li>📊 إنشاء لوحة تحكم تفاعلية لمتابعة البيانات لحظياً.</li>
+        <li>🤝 تعزيز التعاون مع الجهات التنظيمية لتوفير بيانات أدق حول التنقل والإقامة.</li>
+        <li>💡 دعم الجهات المختصة بمخرجات ذكية تعتمد على الذكاء الاصطناعي وتحليل البيانات التشغيلية.</li>
+      </ul>
+    </div>
+
+    <div class="buttons">
+      <a href="/charts">📊 عرض الرسوم البيانية</a>
+    </div>
+
+  </main>
+</body>
+</html>

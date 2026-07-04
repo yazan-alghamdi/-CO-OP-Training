@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>التحليل الوصفي - تنظيم قدوم الحجاج 1446هـ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      background: #fff8e1 url('{{ url_for("static", filename="ornament_shine.png") }}') repeat;
+      background-size: 300px;
+      background-position: top center;
+      background-attachment: fixed;
+      font-size: 1.3rem; /* زيادة حجم الخط العام */
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(90deg, #E4A940, #A784A7);
+      padding: 1.5rem 2rem;
+      color: white;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar img {
+      height: 60px;
+      width: auto;
+    }
+
+    .top-bar h1 {
+      font-size: 2rem; /* تكبير عنوان الهيدر */
+      margin: 0;
+      flex: 1;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .container {
+      padding: 2.5rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .content-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(228, 169, 64, 0.25);
+      padding: 2.2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
+
+    .content-box h2 {
+      font-size: 2rem;
+      color: #7A5A23;
+      margin-top: 0;
+      font-weight: 800;
+    }
+
+    .content-box p,
+    .content-box ul,
+    .content-box ol {
+      line-height: 2.2;
+      font-size: 1.4rem; /* زيادة حجم الفقرات */
+      font-weight: 500;
+    }
+
+    .content-box ul,
+    .content-box ol {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .content-box li {
+      margin-bottom: 0.6rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttons a {
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      background-color: #E4A940;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3rem;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+    }
+
+    .buttons a:hover {
+      background-color: #c78b30;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <img src="{{ url_for('static', filename='logo_firstcity_white.png') }}" alt="شعار المدينة الأولى">
+      <h1>📊 التحليل الوصفي لتنظيم قدوم ومغادرة حجاج الخارج لعام 1446 هـ</h1>
+      <img src="{{ url_for('static', filename='logo_hajj_white.png') }}" alt="شعار وزارة الحج والعمرة">
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="content-box">
+      <h2>📖 قصة المشروع</h2>
+      <p>
+        في ظل السعي المستمر لتحسين تنظيم قدوم ومغادرة الحجاج لموسم الحج 1446 هـ، أطلقت رحلتنا و قصتنا في هذا المشروع التحليلي لاستكشاف حركة قدوم ومغادرة الحجاج من الخارج.
+        استندت فكرتنا إلى الاستفادة من البيانات الرسمية المقدمة من وزارة الحج والعمرة ومنصة نسك؛ لنروي قصة تنقل ضيوف الرحمن، تعرّفنا فيها على أنماط القدوم و المغادرة وعدد الحجاج القادمين والمغادرين بحسب المنافذ و الدول و المسارات ووجهات الوصول ، مع تسليط الضوء على الفترات الزمنية الحرجة.
+      </p>
+    </div>
+
+    <div class="content-box">
+      <h2>📂 طبيعة البيانات</h2>
+      <ul>
+        <li>📡 مصدر البيانات: وزارة الحج والعمرة ومنصة نسك.</li>
+        <li>📁 نوع الملفات: جداول CSV منظمة وخالية من التكرار.</li>
+        <li>🧾 الحقول الرئيسية لبيانات القدوم : اسم الدولة، عدد الحجاج، تاريخ القدوم، مدينة الوصول، وسيلة القدوم، الإقامة قبل الحج.</li>
+        <li>🔢 حجم البيانات: تحتوي بيانات القدوم على ستة أعمدة و ثمانية آلاف صف - سجل تقريبا ، تشمل حجاج البرّ والبحر والجو.</li>
+        <li>🧹 عمليات التنظيف: إزالة القيم المفقودة، توحيد تنسيقات التواريخ، اشتقاق متغيرات جديدة (فترة القدوم).</li>
+      </ul>
+    </div>
+
+    <div class="content-box">
+      <h2>🧠 منهجية التحليل</h2>
+      <ol>
+        <li>📥 جمع البيانات وتوحيدها من المصادر الرسمية.</li>
+        <li>🧼 تنظيف ومعالجة البيانات باستخدام مكتبات Python (Pandas، NumPy).</li>
+        <li>📊 بناء تحليلات وصفية وإحصائية (توزيع الحجاج حسب الدولة والمدينة، الفترات الزمنية).</li>
+        <li>📈 إنشاء رسوم بيانية تفاعلية باستخدام Plotly وD3.js لعرض الأنماط الرئيسية.</li>
+        <li>📌 استخلاص النتائج وتقديم توصيات لوزارة الحج و العمرة - المدينة الأولى  في موسم الحج.</li>
+      </ol>
+    </div>
+
+    <div class="content-box">
+      <div class="buttons">
+        <a href="/objectives">🎯 عرض الأهداف</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

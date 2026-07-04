@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>لوحة الرسوم التفاعلية – تحليل بيانات الحجاج 1446هـ</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #fdf9f3 url('{{ url_for("static", filename="ornament_proficiency.png") }}') repeat;
+      background-size: 300px;
+      background-position: top center;
+      background-attachment: fixed;
+      color: #333232;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #A0804E;
+      padding: 1rem;
+      text-align: center;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem;
+    }
+    .chart-section {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(122, 90, 35, 0.15);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .chart-header {
+      cursor: pointer;
+      padding: 1rem;
+      background-color: #f5f0e8;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.2rem;
+      color: #7A5A23;
+      font-weight: bold;
+      user-select: none;
+    }
+    .chart-header:hover {
+      background-color: #f1e7d7;
+    }
+    .chart-content {
+      display: none;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .heatmap-box img {
+      max-width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .chart-scroll-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      overflow-x: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: white;
+    }
+    .chart-scroll-container svg {
+      width: 1200px;
+      height: 600px;
+      display: block;
+    }
+    #dateDisplay {
+      max-width: 1000px;
+      margin: 0.5rem auto;
+      text-align: right;
+      font-size: 1.4rem;
+      color: #7A5A23;
+      font-weight: bold;
+    }
+    .slider-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 1rem auto;
+      text-align: center;
+    }
+    input[type="range"] {
+      width: 80%;
+      margin: 0.5rem 0;
+    }
+    #radial-container h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #7A5A23;
+    }
+    #radialSvg {
+      width: 100%;
+      height: 900px;
+      display: block;
+      margin: auto;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      font-size: 0.9rem;
+    }
+    .buttons {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .buttons a {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      background-color: #A0804E;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .buttons a:hover {
+      background-color: #7A5A23;
+    }
+  </style>
+</head>
+<body>
+  <header>📊 لوحة الرسوم التفاعلية – تحليل بيانات قدوم الحجاج 1446هـ</header>
+
+  <div class="container">
+
+    <!-- القسم 1 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart1-container">
+        الرسم 1: توزيع عدد الحجاج لأعلى 15 دولة حسب وسيلة القدوم
+      </div>
+      <div id="chart1-container" class="chart-content">
+        <div id="chart1" style="width:100%; height:450px;"></div>
+      </div>
+    </div>
+
+    <!-- القسم 2 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart2-container">
+        الرسم 2: توزيع الحجاج حسب وسيلة القدوم
+      </div>
+      <div id="chart2-container" class="chart-content">
+        <div id="chart2" style="width:100%; height:450px;"></div>
+      </div>
+    </div>
+
+    <!-- القسم 3 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart3-container">
+        الرسم 3: عدد الحجاج حسب تاريخ الوصول (29/4–1/6)
+      </div>
+      <div id="chart3-container" class="chart-content">
+        <div id="chart3" style="width:100%; height:450px;"></div>
+      </div>
+    </div>
+
+    <!-- القسم 4 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart4-container">
+        الرسم 4: عدد الحجاج حسب المدينة (جدة، المدينة المنورة، أخرى)
+      </div>
+      <div id="chart4-container" class="chart-content">
+        <div id="chart4" style="width:100%; height:450px;"></div>
+      </div>
+    </div>
+
+    <!-- القسم 5 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart5-container">
+        الرسم 5: تدفق الحجاج لأعلى 15 دولة
+      </div>
+      <div id="chart5-container" class="chart-content">
+        <div id="chart5" style="width:100%; height:550px;"></div>
+      </div>
+    </div>
+
+    <!-- Heatmap -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="heatmap-container">
+        الخريطة الحرارية: أعلى 10 دول × (جدة، المدينة المنورة، أخرى)
+      </div>
+      <div id="heatmap-container" class="chart-content heatmap-box">
+        <img src="{{ heatmap_url }}" alt="خريطة حرارية لعدد الحجاج" />
+      </div>
+    </div>
+
+    <!-- القسم 7 -->
+    <div class="chart-section">
+      <div class="chart-header" data-target="chart7-container">
+        الرسم 7: ملخص أعلى 10 دول – العدد – الوسيلة – المدينة
+      </div>
+      <div id="chart7-container" class="chart-content">
+        <div id="chart7" style="width:100%; height:500px;"></div>
+      </div>
+    </div>
+
+    <!-- القسم 8 -->
+<div class="chart-section">
+  <div class="chart-header" data-target="chart8-container">
+    الرسم 8: سباق الدول حسب عدد الحجاج
+  </div>
+  <div id="chart8-container" class="chart-content">
+    <div class="chart-scroll-container">
+      <svg id="chart8"></svg>
+    </div>
+  </div>
+</div>
+
+
+
+
+    
+
+    <!-- زر واحد: الانتقال إلى صفحة الإحصائيات والأرقام -->
+    <div class="buttons">
+      <a href="/statistics"> 🔢 عرض الإحصائيات والأرقام</a>
+    </div>
+
+  </div>
+
+  <script>
+    const fig1 = {{ chart1_replaced | tojson }};
+    const fig2 = {{ chart2 | tojson }};
+    const fig3 = {{ chart3 | tojson }};
+    const fig4 = {{ chart4 | tojson }};
+    const fig5 = {{ chart5 | tojson }};
+    const fig7 = {{ chart7 | tojson }};
+    let rendered = { chart1:false,chart2:false,chart3:false,chart4:false,chart5:false,heatmap:false,chart7:false,chart8:false,chart9:false };
+    function toggleChart(containerId,chartId,figObject) {
+      const container=document.getElementById(containerId);
+      if(container.style.display!== 'block'){
+        container.style.display='block';
+        if(figObject&&!rendered[chartId]){Plotly.newPlot(chartId,figObject.data,figObject.layout,{responsive:true});rendered[chartId]=true;}
+        if(chartId==='chart8'&&!rendered.chart8){startRace();rendered.chart8=true;}
+        if(chartId==='chart9'&&!rendered.chart9){startRadial();rendered.chart9=true;}
+      } else container.style.display='none';
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelectorAll('.chart-header').forEach(h=>{
+        h.addEventListener('click',()=>{
+          const targetId=h.dataset.target;
+          switch(targetId) {
+            case 'chart1-container': toggleChart('chart1-container','chart1',fig1); break;
+            case 'chart2-container': toggleChart('chart2-container','chart2',fig2); break;
+            case 'chart3-container': toggleChart('chart3-container','chart3',fig3); break;
+            case 'chart4-container': toggleChart('chart4-container','chart4',fig4); break;
+            case 'chart5-container': toggleChart('chart5-container','chart5',fig5); break;
+            case 'heatmap-container': toggleChart('heatmap-container','heatmap',null); break;
+            case 'chart7-container': toggleChart('chart7-container','chart7',fig7); break;
+            case 'chart8-container': toggleChart('chart8-container','chart8',null); break;
+            case 'chart9-container': toggleChart('chart9-container','chart9',null); break;
+          }
+        });
+      });
+    });
+    function startRace(){ /* كامل كود D3 لسباق الدول */ }
+    function startRadial(){ /* كامل كود D3 للخريطة الدائرية */ }
+
+    function startRace() {
+  const svg = d3.select("#chart8");
+  const width = 1200;
+  const height = 600;
+  const margin = { top: 50, right: 100, bottom: 50, left: 200 };
+
+svg.attr("width", width).attr("height", height + 70);
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+  const color = d3.scaleOrdinal(d3.schemeSet3);
+
+  d3.json("/static/bar_chart_race_data_hijri.json").then(data => {
+    const dates = Object.keys(data).sort();
+    const x = d3.scaleLinear().range([0, chartWidth]);
+    const y = d3.scaleBand().range([0, chartHeight]).padding(0.1);
+    const dateText = g.append("text")
+      .attr("x", chartWidth - 10)
+      .attr("y", chartHeight + 30)
+      .attr("text-anchor", "end")
+      .attr("font-size", "24px")
+      .attr("fill", "#7A5A23");
+
+    let i = 0;
+    function updateChart() {
+      const currentDate = dates[i];
+      const currentData = Object.entries(data[currentDate])
+        .map(([country, value]) => ({ country, value: +value }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10);
+
+      x.domain([0, d3.max(currentData, d => d.value)]);
+      y.domain(currentData.map(d => d.country));
+
+      const bars = g.selectAll("rect").data(currentData, d => d.country);
+      bars.enter().append("rect")
+        .attr("y", d => y(d.country))
+        .attr("height", y.bandwidth())
+        .attr("x", 0)
+        .attr("width", d => x(d.value))
+        .attr("fill", d => color(d.country))
+        .merge(bars)
+        .transition().duration(500)
+        .attr("y", d => y(d.country))
+        .attr("width", d => x(d.value));
+      bars.exit().remove();
+
+      const labels = g.selectAll("text.label").data(currentData, d => d.country);
+      labels.enter().append("text")
+        .attr("class", "label")
+        .attr("y", d => y(d.country) + y.bandwidth() / 2 + 5)
+        .attr("x", d => x(d.value) + 5)
+        .text(d => `${d.country}: ${d.value}`)
+        .merge(labels)
+        .transition().duration(500)
+        .attr("y", d => y(d.country) + y.bandwidth() / 2 + 5)
+        .attr("x", d => x(d.value) + 5)
+        .text(d => `${d.country}: ${d.value}`)
+
+      labels.exit().remove();
+
+      dateText.text(currentDate + ' هـ');
+      i = (i + 1) % dates.length;
+    }
+
+    updateChart();
+    setInterval(updateChart, 1500);
+  });
+}
+
+
+  </script>
+</body>
+</html>
